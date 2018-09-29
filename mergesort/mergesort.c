@@ -4,24 +4,11 @@
 #include "mergesort.h"
 
 
-void mergesort(int size, int[] values) {
-   
-     mergesortRange(values, 0, values.length);
- 
-     }
-
-void mergesortRange(int[] values, int startIndex, int endIndex) {
+bool needsSorting(int rangeSize) {
     
-	  int rangeSize = endIndex - startIndex;
-    
-	  if (needsSorting(rangeSize)) {
-      
-	     int midPoint = (startIndex + endIndex) / 2;
-             mergesortRange(values, startIndex, midPoint);
-             mergesortRange(values, midPoint, endIndex);
-             mergeRanges(values, startIndex, midPoint, endIndex);
-          }
-     }
+     return rangeSize >= 2;
+	
+}
 
 void mergeRanges(int[] values, int startIndex, int midPoint, int endIndex) {
    
@@ -37,14 +24,14 @@ void mergeRanges(int[] values, int startIndex, int midPoint, int endIndex) {
                destination[copyIndex] = values[firstIndex];
                ++firstIndex;
 	  
-	    } else
-	       {destination[copyIndex] = values[secondIndex];
+	    } else {
+	       destination[copyIndex] = values[secondIndex];
                ++secondIndex;
-               }
+            }
      
 	    ++copyIndex;
     
-      }
+    }
     
     while (firstIndex < midPoint) {
      
@@ -68,12 +55,23 @@ void mergeRanges(int[] values, int startIndex, int midPoint, int endIndex) {
 
     free(destination);
  
-    }
+}
 
-bool needsSorting(int rangeSize) {
+void mergesortRange(int[] values, int startIndex, int endIndex) {
     
-     return rangeSize >= 2;
- 
+	  int rangeSize = endIndex - startIndex;
+    
+	  if (needsSorting(rangeSize)) {
+      
+	     int midPoint = (startIndex + endIndex) / 2;
+             mergesortRange(values, startIndex, midPoint);
+             mergesortRange(values, midPoint, endIndex);
+             mergeRanges(values, startIndex, midPoint, endIndex);
+          }
      }
 
-}
+void mergesort(int size, int[] values) {
+   
+     mergesortRange(values, 0, values.length);
+ 
+     }
