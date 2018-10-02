@@ -1,5 +1,7 @@
-#include<stdlib.h> 
-#include<stdio.h>
+#include <stdlib.h> 
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
 #include "mergesort.h"
 
@@ -10,10 +12,11 @@ bool needsSorting(int rangeSize) {
 	
 }
 
-void mergeRanges(int[] values, int startIndex, int midPoint, int endIndex) {
+void mergeRanges(int *values, int startIndex, int midPoint, int endIndex) {
    
     int rangeSize = endIndex - startIndex;
-    int* destination = (int*) calloc(rangeSize, sizeOf(int));
+    int* destination;
+    destination = (int*) calloc(rangeSize, sizeof(int));
     int firstIndex = startIndex;
     int secondIndex = midPoint;
     int copyIndex = 0;
@@ -34,8 +37,8 @@ void mergeRanges(int[] values, int startIndex, int midPoint, int endIndex) {
     }
     
     while (firstIndex < midPoint) {
-     
-          destination[copyIndex] = values[firstIndex];
+
+  	  destination[copyIndex] = values[firstIndex];
           ++copyIndex;
           ++firstIndex;
     }
@@ -57,7 +60,7 @@ void mergeRanges(int[] values, int startIndex, int midPoint, int endIndex) {
  
 }
 
-void mergesortRange(int[] values, int startIndex, int endIndex) {
+void mergesortRange(int *values, int startIndex, int endIndex) {
     
 	  int rangeSize = endIndex - startIndex;
     
@@ -70,8 +73,8 @@ void mergesortRange(int[] values, int startIndex, int endIndex) {
           }
      }
 
-void mergesort(int size, int[] values) {
+void mergesort(int size, int *values) {
    
-     mergesortRange(values, 0, values.length);
+     mergesortRange(values, 0, size);
  
      }
