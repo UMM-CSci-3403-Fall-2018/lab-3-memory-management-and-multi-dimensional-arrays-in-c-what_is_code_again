@@ -7,35 +7,58 @@
 #include "../mergesort/mergesort.h"
 #include "../mergesort/mergesort.c"
 
-bool needsMerging(int rangeSize) {
-	
-	return rangeSize >= 2;
+
+
+int sumofintegers(int* sizes,int num_arrays){
+  int sum = 0;
+  int index;
+  for (index=0; index < num_arrays; index++){
+    sum += sizes[index];
+  }
+  return sum;
+    }
+
+bool checkarrayDuplicates(int* oneDimArray,int value,int sizes){
+  int index;
+  for (index=0; index < sizes; index++){
+    if (value == oneDimArray[index]){
+      return false;
+    }
+    
+  }
+  return true;
 }
 
-void removeDuplicate(int sortedArray[], int* size) {
-	
-	//Checks if the array is empty or has a single integer and returns it.
-	if (size==0 || size==1)
-		return size;
+  
 
-	//Creates a temporary array to put the cleaned up integers into.
-	int temp[size];
-	
-	//Creates a counter for the temporary array so that we know where we 
-	//are in the array.
-	int Counter = 0;
+int* array_merge(int num_arrays, int* sizes, int** values){
+  int sum = sumofintegers(sizes, num_arrays);
+  int bigArray[sum];
+  int uniqueNumbersCount = 0;
+  int index;
+  int valueindex;
+  for (index=0; index < num_arrays; index++) {
+    for (valueindex=0; valueindex < sizes[index]; valueindex++){
+      if (checkarrayDuplicates(bigArray, values[index][valueindex] , uniqueNumbersCount)){
+	  bigArray[uniqueNumbersCount] = values[index][valueindex];
+	  uniqueNumbersCount++;
+	 
+	}
+    }
+    }
+      int finalsumsize = uniqueNumbersCount + 1;
+      int* lastBigArray = (int *)malloc(finalsumsize * sizeof(int));
+      
+      lastBigArray[0] = uniqueNumbersCount;
 
-	//The begining of the for loop that begins the traversal of the array.
-       for (i=0; i<size-1; i++) {
-       
-	//Checks sorrted array if it is not equal to the next number it puts it 	//into the temporary array
-       if(sortedArray[i] != sortedArray[i+1]) {
-       temp[Counter++] = sorrtedArray[i];
-       
-       
-       }
-       
-       }
-
-
+      for(index = 1; index < finalsumsize; index++){
+	lastBigArray[index] = bigArray[index - 1];
+	mergesortRange(lastBigArray,1,finalsumsize);
+    
+ 
+   
+      }
+      return lastBigArray;
 }
+
+    
